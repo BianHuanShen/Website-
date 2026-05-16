@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dark Cloud Storage</title>
+
+  <!-- Tipografía moderna -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Loader elegante -->
+  <div class="loader-wrapper" id="loaderWrapper">
+    <div class="loader"></div>
+    <h2>Inicializando Cloud Storage...</h2>
+  </div>
+
+  <div class="app-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">
+          <i class="fa-solid fa-cloud"></i>
+        </div>
+        <div>
+          <h2>DarkCloud</h2>
+          <p>Premium Storage</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="active">
+          <i class="fa-solid fa-table-columns"></i>
+          Dashboard
+        </a>
+
+        <a href="#uploadSection">
+          <i class="fa-solid fa-upload"></i>
+          Subir Archivos
+        </a>
+
+        <a href="#fileSection">
+          <i class="fa-solid fa-folder"></i>
+          Mis Archivos
+        </a>
+
+        <a href="#statsSection">
+          <i class="fa-solid fa-chart-simple"></i>
+          Estadísticas
+        </a>
+      </nav>
+
+      <div class="storage-card glass">
+        <div class="storage-top">
+          <h4>Espacio Usado</h4>
+          <span id="storagePercent">0%</span>
+        </div>
+
+        <div class="progress-bar">
+          <div class="progress-fill" id="storageFill"></div>
+        </div>
+
+        <p id="storageText">0 MB de 500 MB</p>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main-content">
+
+      <!-- Header -->
+      <header class="topbar glass">
+        <div>
+          <h1>Cloud Storage Dashboard</h1>
+          <p>Gestiona todos tus archivos en la nube</p>
+        </div>
+
+        <div class="topbar-actions">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="Buscar archivos...">
+          </div>
+
+          <button class="premium-btn" id="uploadTrigger">
+            <i class="fa-solid fa-plus"></i>
+            Subir
+          </button>
+        </div>
+      </header>
+
+      <!-- Estadísticas -->
+      <section class="stats-grid" id="statsSection">
+
+        <div class="stat-card glass">
+          <div class="stat-icon blue">
+            <i class="fa-solid fa-file"></i>
+          </div>
+          <div>
+            <h3 id="totalFiles">0</h3>
+            <p>Total Archivos</p>
+          </div>
+        </div>
+
+        <div class="stat-card glass">
+          <div class="stat-icon purple">
+            <i class="fa-solid fa-hard-drive"></i>
+          </div>
+          <div>
+            <h3 id="usedSpace">0 MB</h3>
+            <p>Espacio Utilizado</p>
+          </div>
+        </div>
+
+        <div class="stat-card glass">
+          <div class="stat-icon green">
+            <i class="fa-solid fa-photo-film"></i>
+          </div>
+          <div>
+            <h3 id="mediaFiles">0</h3>
+            <p>Archivos Multimedia</p>
+          </div>
+        </div>
+
+        <div class="stat-card glass">
+          <div class="stat-icon orange">
+            <i class="fa-solid fa-layer-group"></i>
+          </div>
+          <div>
+            <h3 id="fileTypes">0</h3>
+            <p>Tipos de Archivo</p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Upload -->
+      <section class="upload-section glass" id="uploadSection">
+
+        <div class="section-title">
+          <h2>Subida de Archivos</h2>
+          <p>Arrastra y suelta cualquier archivo</p>
+        </div>
+
+        <div class="drop-zone" id="dropZone">
+          <input type="file" id="fileInput" multiple hidden>
+
+          <div class="drop-content">
+            <div class="upload-icon">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+
+            <h2>Arrastra archivos aquí</h2>
+            <p>o haz clic para seleccionar archivos</p>
+
+            <button class="premium-btn secondary" id="selectBtn">
+              Seleccionar Archivos
+            </button>
+          </div>
+        </div>
+
+        <!-- Barra de progreso -->
+        <div class="upload-progress hidden" id="uploadProgress">
+          <div class="progress-header">
+            <span>Subiendo archivos...</span>
+            <span id="progressPercent">0%</span>
+          </div>
+
+          <div class="progress-bar large">
+            <div class="progress-fill" id="uploadFill"></div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Actividad reciente -->
+      <section class="recent-activity glass">
+        <div class="section-title">
+          <h2>Actividad Reciente</h2>
+          <p>Últimos movimientos realizados</p>
+        </div>
+
+        <div class="activity-list" id="activityList">
+          <div class="empty-message">
+            No hay actividad reciente.
+          </div>
+        </div>
+      </section>
+
+      <!-- Filtros -->
+      <section class="filters glass">
+        <button class="filter-btn active" data-filter="all">Todos</button>
+        <button class="filter-btn" data-filter="image">Imágenes</button>
+        <button class="filter-btn" data-filter="video">Videos</button>
+        <button class="filter-btn" data-filter="audio">Audio</button>
+        <button class="filter-btn" data-filter="document">Documentos</button>
+        <button class="filter-btn" data-filter="other">Otros</button>
+      </section>
+
+      <!-- Archivos -->
+      <section class="files-section" id="fileSection">
+
+        <div class="section-title">
+          <h2>Mis Archivos</h2>
+          <p>Todos tus archivos almacenados</p>
+        </div>
+
+        <div class="file-grid" id="fileGrid"></div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Notificaciones -->
+  <div class="notification-container" id="notificationContainer"></div>
+
+  <script src="script.js"></script>
+</body>
+  </html>
